@@ -1,3 +1,50 @@
+# DevOps Capstone Project — Customer Accounts
+
+[![CI Build](https://github.com/Janattie/devops-capstone-project/actions/workflows/ci-build.yaml/badge.svg)](https://github.com/Janattie/devops-capstone-project/actions/workflows/ci-build.yaml)
+
+Customer Accounts REST service based on the IBM course starter template.
+Implements create, read, update, delete, and list operations with Flask and
+SQLAlchemy, Talisman security headers, and CORS. Developed with AI assistance.
+
+## API
+
+| Method | Route | Result |
+| --- | --- | --- |
+| POST | /accounts | Create an account (201) |
+| GET | /accounts | List accounts (200) |
+| GET | /accounts/{id} | Read an account (200 or 404) |
+| PUT | /accounts/{id} | Update an account (200 or 404) |
+| DELETE | /accounts/{id} | Delete idempotently (204) |
+| GET | /health | Health status (200) |
+
+## Validation
+
+Use Python 3.9 to match the course's nose test runner:
+
+```sh
+pip install -r requirements.txt
+export DATABASE_URI=postgresql://postgres:postgres@localhost:5432/postgres
+flake8 service tests
+nosetests
+```
+
+For local checks without PostgreSQL, set `DATABASE_URI=sqlite:////tmp/accounts.sqlite`.
+The local SQLite test run passes 31 tests with 96% coverage. CI separately checks PostgreSQL.
+Docker, Kubernetes, and Tekton execution must be verified in the course lab;
+this README does not claim those deployments have succeeded.
+
+## Run
+
+```sh
+gunicorn --bind 0.0.0.0:8080 service:app
+```
+
+The public demonstration API permits cross-origin requests without credentials.
+TLS is expected to terminate at the ingress. This is a course exercise and does
+not implement authentication or authorization for private customer data.
+
+## Original starter documentation
+
 # DevOps Capstone Template
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
